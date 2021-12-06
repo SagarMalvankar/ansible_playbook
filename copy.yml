@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+  - name: Copy file from source to destination
+    copy:
+     src: /tmp/test.txt
+     dest: /tmp
+     backup: yes

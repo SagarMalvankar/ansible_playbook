@@ -1,0 +1,27 @@
+---
+- hosts: all
+  tasks: 
+   - name: Check ping
+     ping:
+   - name: Execute Shell Command
+     shell: uname -r
+     register: kernelop
+   - name: check uptime
+     shell: uptime | awk -F, '{print $1}'
+     register: uptimeop
+   - name: Check Filesystem
+     shell: for i in `df | awk '{print $6}' | tail -n +2`; do df -hPT $i | tail -n +2 | awk '{print $7"-"$6}'; done
+     register: FilesystemOP
+   - name: Check VMSTAT
+     shell: vmstat 1 2
+     register: vmstat
+   - name: Details of OS
+     debug: 
+      msg:  
+       - The operating system is {{ ansible_distribution }}
+       - The IP is {{ inventory_hostname }}
+       - Kernel is {{ kernelop.stdout }} and uptime is {{ uptimeop.stdout }} 
+       - Please check Filesystem status Filesystem Name followed by utlization
+       - "{{ FilesystemOP.stdout_lines }}" 
+       - Please check CPU and Memory utilizaton
+       - "{{ vmstat.stdout_lines }}" 
