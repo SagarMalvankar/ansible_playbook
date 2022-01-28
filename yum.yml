@@ -1,14 +1,14 @@
 ---
-- hosts: ubuntu
+- hosts: all
   become: true
   tasks:
   - name: Install packages using yum
     yum:
-     name: vsftpd
+     name: rpcbind
      state: latest
     when: ansible_distribution == "RedHat"
   - name: Install Packages on Ubuntu/Debian servers
     apt:
-     name: vsftpd
+     name: rpcbind
      state: latest
     when: ansible_distribution == "Ubuntu"

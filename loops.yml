@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: Install ntp and other packages
+     yum:
+        name: "{{ item }}"
+        state: present
+     when: ansible_distribution == "RedHat"
+     loop:
+      - ntp
+      - chrony
+      - nmap-ncat
+      - telnet
+  
+   - name: Install in ubuntu
+     apt: 
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+     when: ansible_distribution == "Ubuntu"
+     loop:
+      - ntp
+      - chrony
+      - nmap-ncat
+      - telnet
+ 

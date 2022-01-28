@@ -4,6 +4,6 @@
   tasks: 
   - name: Copy file from source to destination
     copy:
-     src: /tmp/test.txt
+     src: /home/ansible/ansible_playbook
      dest: /tmp
      backup: yes
